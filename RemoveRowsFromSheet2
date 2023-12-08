@@ -1,0 +1,17 @@
+import pandas as pd
+
+# Read the Excel file into a pandas dataframe for sheet1
+df1 = pd.read_excel('C:\\Dell-Team\\Sprints\\FY24\\Grax\\test\\excel\\FY24 Q1 DirectLead 2019_Dec14-Dec31.xlsx', sheet_name='sheet1')
+
+# Read the Excel file into a pandas dataframe for sheet2
+df2 = pd.read_excel('C:\\Dell-Team\\Sprints\\FY24\\Grax\\test\\excel\\FY24 Q1 DirectLead 2019_Dec14-Dec31.xlsx', sheet_name='sheet2')
+
+# Get the list of values in column1 of sheet2
+values_to_remove = df2['column1'].tolist()
+
+# Remove rows from sheet1 where column1 matches a value in sheet2
+df1 = df1[~df1['column1'].isin(values_to_remove)]
+
+# Save the modified dataframe to a new Excel file
+with pd.ExcelWriter('file_modified.xlsx') as writer:
+    df1.to_excel(writer, sheet_name='sheet1', index=False)
